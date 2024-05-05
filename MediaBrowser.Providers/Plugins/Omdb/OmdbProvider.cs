@@ -398,7 +398,7 @@ namespace MediaBrowser.Providers.Plugins.Omdb
 
             // Grab series genres because IMDb data is better than TVDB. Leave movies alone
             // But only do it if English is the preferred language because this data will not be localized
-            if (isEnglishRequested && !string.IsNullOrWhiteSpace(result.Genre))
+            if (!string.IsNullOrWhiteSpace(result.Genre))
             {
                 item.Genres = Array.Empty<string>();
 
