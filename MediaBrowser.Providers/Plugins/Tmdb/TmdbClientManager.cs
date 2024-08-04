@@ -320,6 +320,20 @@ namespace MediaBrowser.Providers.Plugins.Tmdb
                 PersonMethods.TvCredits | PersonMethods.MovieCredits | PersonMethods.Images | PersonMethods.ExternalIds,
                 cancellationToken).ConfigureAwait(false);
 
+            if (person is not null && !string.Equals(language, "en", StringComparison.OrdinalIgnoreCase) && !string.Equals(language, "en-US", StringComparison.OrdinalIgnoreCase))
+            {
+                Person? personEn = await _tmDbClient.GetPersonAsync(
+                    personTmdbId,
+                    "en-US",
+                    PersonMethods.TvCredits | PersonMethods.MovieCredits | PersonMethods.Images | PersonMethods.ExternalIds,
+                    cancellationToken).ConfigureAwait(false);
+
+                if (personEn is not null)
+                {
+                   person.Name = personEn.Name;
+                }
+            }
+
             if (person is not null)
             {
                 _memoryCache.Set(key, person, TimeSpan.FromHours(CacheDurationInHours));
