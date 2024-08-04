@@ -7,5 +7,9 @@ namespace MediaBrowser.Providers.Plugins.Omdb
     public class PluginConfiguration : BasePluginConfiguration
     {
         public bool CastAndCrew { get; set; }
+
+        public bool UsePlotForNonEnglish { get; set; } = true;
+
+        public bool UseGenresForNonEnglish { get; set; }
     }
 }

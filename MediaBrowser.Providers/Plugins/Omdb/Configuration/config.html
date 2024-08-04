@@ -13,6 +13,14 @@
                         <input is="emby-checkbox" type="checkbox" id="castAndCrew" />
                         <span>Collect information about the cast and other crew members from OMDb.</span>
                     </label>
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="usePlotForNonEnglish" />
+                        <span>Use plot from OMDb for non-English languages.</span>
+                    </label>
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="useGenresForNonEnglish" />
+                        <span>Use genres from OMDb for non-English languages.</span>
+                    </label>
                     <br />
                     <div>
                         <button is="emby-button" type="submit" class="raised button-submit block"><span>Save</span></button>
@@ -30,6 +38,8 @@
                     Dashboard.showLoadingMsg();
                     ApiClient.getPluginConfiguration(PluginConfig.pluginId).then(function (config) {
                         document.querySelector('#castAndCrew').checked = config.CastAndCrew;
+                        document.querySelector('#usePlotForNonEnglish').checked = config.UsePlotForNonEnglish;
+                        document.querySelector('#useGenresForNonEnglish').checked = config.UseGenresForNonEnglish;
                         Dashboard.hideLoadingMsg();
                     });
                 });
@@ -41,6 +51,8 @@
 
                     ApiClient.getPluginConfiguration(PluginConfig.pluginId).then(function (config) {
                         config.CastAndCrew = document.querySelector('#castAndCrew').checked;
+                        config.UsePlotForNonEnglish = document.querySelector('#usePlotForNonEnglish').checked;
+                        config.UseGenresForNonEnglish = document.querySelector('#useGenresForNonEnglish').checked;
                         ApiClient.updatePluginConfiguration(PluginConfig.pluginId, config).then(Dashboard.processPluginConfigurationUpdateResult);
                     });
 

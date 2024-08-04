@@ -399,8 +399,8 @@ namespace MediaBrowser.Providers.Plugins.Omdb
             var item = itemResult.Item;
 
             // Grab series genres because IMDb data is better than TVDB. Leave movies alone
-            // But only do it if English is the preferred language because this data will not be localized
-            if (isEnglishRequested && !string.IsNullOrWhiteSpace(result.Genre))
+            // But only do it if English is the preferred language or UseGenresForNonEnglish config is set because this data will not be localized
+            if (!string.IsNullOrWhiteSpace(result.Genre) && (isEnglishRequested || Plugin.Instance.Configuration.UseGenresForNonEnglish))
             {
                 item.Genres = Array.Empty<string>();
 
@@ -410,7 +410,10 @@ namespace MediaBrowser.Providers.Plugins.Omdb
                 }
             }
 
-            item.Overview = result.Plot;
+            if (isEnglishRequested || Plugin.Instance.Configuration.UsePlotForNonEnglish)
+            {
+                item.Overview = result.Plot;
+            }
 
             if (!Plugin.Instance.Configuration.CastAndCrew)
             {
